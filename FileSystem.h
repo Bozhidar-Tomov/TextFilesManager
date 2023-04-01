@@ -40,6 +40,7 @@ public:
 
 private:
     void swapFiles(int, int);
+
     void copyFiles(const File *files, int filesCount);
     void copyFrom(const FileSystem &other);
     void free();

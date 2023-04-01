@@ -205,6 +205,8 @@ void FileSystem::deleteFile(const char *fileName)
         if (myStrCmp(this->files[i].getName(), fileName) == 0)
         {
             this->files[i] = this->files[--this->size];
+            std::cout << "File " << fileName << " deleted." << std::endl;
+
             return;
         }
     }
