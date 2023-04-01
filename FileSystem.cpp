@@ -25,6 +25,28 @@ bool compareFiles(const File &a, const File &b, SortBy sortBy)
     return false;
 }
 
+bool fillRights(Right rights[], const char *accessRights)
+{
+    for (int i = 0; i < ACCESS_RIGHTS_STR_SIZE; ++i)
+    {
+        if (accessRights[i] == READ && i % 3 == 0)
+            rights[i] = {Right::read};
+
+        else if (accessRights[i] == WRITE && i % 3 == 1)
+            rights[i] = {Right::write};
+
+        else if (accessRights[i] == EXECUTE && i % 3 == 2)
+            rights[i] = {Right::execute};
+
+        else if (accessRights[i] == NONE)
+            rights[i] = {Right::none};
+        else
+            return false;
+    }
+    return true;
+}
+// End of no member functions follow
+
 // private methods follow
 void FileSystem::sortBy(SortBy sortBy)
 {
@@ -70,7 +92,7 @@ void FileSystem::free()
     files = nullptr;
     size = 0;
 }
-// end of private methods
+// End of private methods
 
 // Public methods follow
 
@@ -103,12 +125,23 @@ FileSystem::~FileSystem()
 }
 // end of Big 4
 
-// custom methods
+// custom methods till the end
 void FileSystem::createEmpty(const char *fileName,
                              unsigned hours, unsigned mins, unsigned secs,
                              unsigned day, unsigned month, unsigned year,
-                             const Right *accessRights)
+                             const char *accessRights)
 {
+    Right rights[ACCESS_RIGHTS_STR_SIZE] = {Right::none, Right::none, Right::none,
+                                            Right::none, Right::none, Right::none,
+                                            Right::none, Right::none, Right::none};
+
+    // if the first condition is true, program enters the if statement and does not check for the second condition.
+    if (myStrLen(accessRights) != ACCESS_RIGHTS_STR_SIZE || !fillRights(rights, accessRights))
+    {
+        std::cout << "File cannot be created. Invalid input data" << std::endl;
+        return;
+    }
+
     if (!fileName)
     {
         std::cout << "Cannot create file. Name is not valid." << std::endl;
@@ -121,7 +154,7 @@ void FileSystem::createEmpty(const char *fileName,
         return;
     }
 
-    this->files[size++] = File(fileName, accessRights, day, month, year, hours, mins, secs);
+    this->files[size++] = File(fileName, rights, day, month, year, hours, mins, secs);
 }
 
 void FileSystem::editFile(const char *fileName, const char *newContent,
@@ -221,8 +254,14 @@ void FileSystem::printAll() const
     std::cout << std::endl;
 }
 
-void FileSystem::changeFileAccessRights(const char *fileName, const Right *accessRights, Group group)
+void FileSystem::changeFileAccessRights(const char *fileName, const char *accessRights, Group group)
 {
+    Right rights[ACCESS_RIGHTS_STR_SIZE] = {Right::none, Right::none, Right::none,
+                                            Right::none, Right::none, Right::none,
+                                            Right::none, Right::none, Right::none};
+
+    fillRights(rights, accessRights);
+
     for (int i = 0; i < this->size; ++i)
     {
         if (myStrCmp(this->files[i].getName(), fileName) != 0)
@@ -230,11 +269,11 @@ void FileSystem::changeFileAccessRights(const char *fileName, const Right *acces
 
         if (!this->files[i].hasRight(group, Right::execute))
         {
-            std::cout << "Error: You do not have permission to execute changes to the file information!" << std::endl;
+            std::cout << "You do not have permission to execute changes to the file information." << std::endl;
             return;
         }
 
-        this->files[i].setAccessRights(accessRights);
+        this->files[i].setAccessRights(rights);
         return;
     }
     std::cout << "Error: File " << fileName << " not found." << std::endl;

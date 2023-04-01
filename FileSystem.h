@@ -23,7 +23,7 @@ public:
     void createEmpty(const char *fileName,
                      unsigned hours, unsigned mins, unsigned secs,
                      unsigned day, unsigned month, unsigned year,
-                     const Right *accessRights);
+                     const char *accessRights);
 
     void editFile(const char *fileName, const char *newContent,
                   unsigned hours, unsigned mins, unsigned secs,
@@ -32,7 +32,7 @@ public:
 
     void deleteFile(const char *fileName);
 
-    void changeFileAccessRights(const char *fileName, const Right *accessRights, Group group);
+    void changeFileAccessRights(const char *fileName, const char *accessRights, Group group);
 
     void printFileInfo(const char *fileName, Group group) const;
     void printAll() const;
