@@ -18,7 +18,6 @@ class Date
 public:
     Date() = default;
     Date(unsigned day, unsigned month, unsigned year);
-    Date &operator=(const Date &d);
     bool operator<(const Date &rhs) const;
 
     unsigned getDay() const;

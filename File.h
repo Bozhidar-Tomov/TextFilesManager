@@ -31,7 +31,7 @@ class File
 public:
     File() = default;
 
-    File(const char *name, const char *content, const Right *accessRights,
+    File(const char *name, const Right *accessRights,
          unsigned creationDay, unsigned creationMonth, unsigned creationYear,
          unsigned creationTimeHours, unsigned creationTimeMins, unsigned creationTimeSecs);
 
@@ -41,7 +41,9 @@ public:
     const DateTime &getLastModified() const;
     const DateTime &getCreationTime() const;
 
-    void setContent(const char *content);
+    bool setContent(const char *content);
+    bool appendContent(const char *content);
+
     void setLastModified(unsigned day, unsigned month, unsigned year,
                          unsigned hours, unsigned mins, unsigned secs);
     void setAccessRights(const Right *rights);
@@ -50,5 +52,9 @@ public:
     void printLastModified() const;
 
     bool hasRight(Group group, Right right) const;
-    void appendContent(const char *content);
+
+private:
+    void setName(const char *name);
+    void setCreationTime(unsigned creationDay, unsigned creationMonth, unsigned creationYear,
+                         unsigned creationTimeHours, unsigned creationTimeMins, unsigned creationTimeSecs);
 };

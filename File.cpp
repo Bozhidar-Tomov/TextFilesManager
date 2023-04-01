@@ -2,7 +2,8 @@
 #include "File.h"
 #include "Utils.h"
 
-File::File(const char *name, const char *content, const Right *accessRights,
+// Public methods follow
+File::File(const char *name, const Right *accessRights,
            unsigned creationDay, unsigned creationMonth, unsigned creationYear,
            unsigned creationTimeHours, unsigned creationTimeMins, unsigned creationTimeSecs)
 {
@@ -14,12 +15,14 @@ File::File(const char *name, const char *content, const Right *accessRights,
         File();
     }
 
-    this->creationTime = DateTime(creationDay, creationMonth, creationYear,
-                                  creationTimeHours, creationTimeMins, creationTimeSecs);
+    setCreationTime(creationDay, creationMonth, creationYear,
+                    creationTimeHours, creationTimeMins, creationTimeSecs);
 
-    myStrCpy(this->name, name);
-    setContent(content);
+    setLastModified(creationDay, creationMonth, creationYear,
+                    creationTimeHours, creationTimeMins, creationTimeSecs);
 
+    setName(name);
+    setContent("");
     setAccessRights(accessRights);
 
     this->sizeInBytes = contentSize;
@@ -58,24 +61,42 @@ const DateTime &File::getCreationTime() const
     return this->creationTime;
 }
 
-void File::setContent(const char *newContent)
+void File::setName(const char *name)
 {
-
-    if (newContent && myStrLen(newContent) <= MAX_CONTENT_SIZE)
+    if (!name)
     {
-        this->sizeInBytes = myStrLen(newContent);
-        myStrCpy(this->content, newContent);
+        return;
     }
+
+    myStrCpy(this->name, name);
 }
 
-void File::appendContent(const char *newContent)
+bool File::setContent(const char *newContent)
 {
-
-    if (newContent && myStrLen(newContent) + this->sizeInBytes <= MAX_CONTENT_SIZE)
+    if (!newContent || myStrLen(newContent) > MAX_CONTENT_SIZE)
     {
-        myStrCpy(this->content, newContent, this->sizeInBytes);
-        this->sizeInBytes += myStrLen(newContent);
+        return false;
     }
+
+    this->sizeInBytes = myStrLen(newContent);
+    this->lastModified = lastModified;
+    myStrCpy(this->content, newContent);
+
+    return true;
+}
+
+bool File::appendContent(const char *newContent)
+{
+    if (!newContent || myStrLen(newContent) + this->sizeInBytes > MAX_CONTENT_SIZE)
+    {
+        return false;
+    }
+
+    myStrCpy(this->content, newContent, this->sizeInBytes);
+    this->lastModified = lastModified;
+    this->sizeInBytes += myStrLen(newContent);
+
+    return true;
 }
 
 void File::printCreationTime() const
@@ -86,6 +107,12 @@ void File::printCreationTime() const
 void File::printLastModified() const
 {
     this->lastModified.print();
+}
+
+void File::setCreationTime(unsigned day, unsigned month, unsigned year,
+                           unsigned hours, unsigned mins, unsigned secs)
+{
+    this->creationTime = DateTime(day, month, year, hours, mins, secs);
 }
 
 void File::setLastModified(unsigned day, unsigned month, unsigned year,

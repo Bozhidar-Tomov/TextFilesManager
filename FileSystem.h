@@ -16,6 +16,9 @@ class FileSystem
 
 public:
     FileSystem(int capacity);
+    FileSystem(const FileSystem &other);
+    FileSystem &operator=(const FileSystem &other);
+    ~FileSystem();
 
     void createEmpty(const char *fileName,
                      unsigned hours, unsigned mins, unsigned secs,
@@ -31,12 +34,13 @@ public:
 
     void changeFileAccessRights(const char *fileName, const Right *accessRights, Group group);
 
-    void printFileInfo(const char *fileName, Group group);
-    void printFileContent(const char *fileName, Group userGroup);
+    void printFileInfo(const char *fileName, Group group) const;
     void printAll() const;
     void sortBy(SortBy sortBy);
 
 private:
     void swapFiles(int, int);
-    bool compareFiles(const File &a, const File &b, SortBy sortBy) const;
+    void copyFiles(const File *files, int filesCount);
+    void copyFrom(const FileSystem &other);
+    void free();
 };

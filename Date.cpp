@@ -8,18 +8,6 @@ Date::Date(unsigned day, unsigned month, unsigned year)
     setDay(day);
 }
 
-Date &Date::operator=(const Date &d)
-{
-    if (this != &d)
-    {
-        day = d.day;
-        month = d.month;
-        year = d.year;
-        isModified = true;
-    }
-    return *this;
-}
-
 bool Date::operator<(const Date &rhs) const
 {
     return this->day < rhs.day && this->month < rhs.month && this->year < rhs.year;
