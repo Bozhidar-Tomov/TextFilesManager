@@ -38,6 +38,8 @@ public:
     int getSize() const;
     const char *getName() const;
     const char *getContent() const;
+    const DateTime &getLastModified() const;
+    const DateTime &getCreationTime() const;
 
     void setContent(const char *content);
     void setLastModified(unsigned day, unsigned month, unsigned year,

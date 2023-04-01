@@ -1,16 +1,15 @@
 #include "File.h"
 
+enum class SortBy
+{
+    name,
+    creationTime,
+    lastModified,
+    size,
+};
 class FileSystem
 {
     File *files = nullptr;
-
-    enum class SortBy
-    {
-        name,
-        creationTime,
-        lastModified,
-        size,
-    };
 
     int capacity = 0;
     int size = 0;
@@ -35,5 +34,9 @@ public:
     void printFileInfo(const char *fileName, Group group);
     void printFileContent(const char *fileName, Group userGroup);
     void printAll() const;
-    void sort(SortBy sortBy);
+    void sortBy(SortBy sortBy);
+
+private:
+    void swapFiles(int, int);
+    bool compareFiles(const File &a, const File &b, SortBy sortBy) const;
 };

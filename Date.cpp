@@ -20,6 +20,11 @@ Date &Date::operator=(const Date &d)
     return *this;
 }
 
+bool Date::operator<(const Date &rhs) const
+{
+    return this->day < rhs.day && this->month < rhs.month && this->year < rhs.year;
+}
+
 unsigned Date::getDay() const
 {
     return day;

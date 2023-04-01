@@ -12,8 +12,6 @@ public:
     DateTime(unsigned day, unsigned month, unsigned year,
              unsigned hours, unsigned mins, unsigned secs);
 
-    // const Date &getDate() const;
-    // const Time &getTime() const;
-
+    bool operator<(const DateTime &rhs) const;
     void print() const;
 };

@@ -8,14 +8,10 @@ DateTime::DateTime(unsigned day, unsigned month, unsigned year,
     this->time = Time(hours, mins, secs);
 }
 
-// const Date &DateTime::getDate() const
-// {
-//     return this->date;
-// }
-// const Time &DateTime::getTime() const
-// {
-//     return this->time;
-// }
+bool DateTime::operator<(const DateTime &rhs) const
+{
+    return this->date < rhs.date && this->time < rhs.time;
+}
 
 void DateTime::print() const
 {

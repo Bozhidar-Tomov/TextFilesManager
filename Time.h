@@ -17,6 +17,8 @@ public:
     Time(size_t hours, size_t mins, size_t seconds);
     Time(size_t seconds);
 
+    bool operator<(const Time &rhs) const;
+
     size_t getSeconds() const;
     size_t getMins() const;
     size_t getHours() const;

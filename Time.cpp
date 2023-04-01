@@ -22,6 +22,11 @@ Time::Time(size_t seconds)
     this->seconds = seconds;
 }
 
+bool Time::operator<(const Time &rhs) const
+{
+    return (compare(rhs) == -1);
+}
+
 size_t Time::getSeconds() const
 {
     return seconds;

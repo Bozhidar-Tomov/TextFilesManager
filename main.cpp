@@ -16,17 +16,17 @@ int main()
         Right::none,
     };
 
-    fileSystem.createEmpty("test.txt", 5, 5, 5, 5, 5, 2005, rights);
-    fileSystem.createEmpty("test.txt", 5, 5, 5, 5, 5, 2005, rights);
-    fileSystem.createEmpty("test.txt", 5, 5, 5, 5, 5, 2005, rights);
-    fileSystem.createEmpty("test.txt", 5, 5, 5, 5, 5, 2005, rights);
-    fileSystem.createEmpty("test.txt", 5, 5, 5, 5, 5, 2005, rights);
-    fileSystem.createEmpty("test.txt", 5, 5, 5, 5, 5, 2005, rights);
-    fileSystem.editFile("test.txt", "NEW CONTENT", 6, 6, 6, 6, 6, 2006, Group::author);
-    // fileSystem.createEmpty("raya.txt", 5, 5, 5, 5, 5, 2005, rights);
-    // fileSystem.deleteFile("raya.txt");
+    fileSystem.createEmpty("v.txt", 8, 8, 8, 8, 8, 2008, rights);
+    fileSystem.createEmpty("r.txt", 6, 6, 6, 6, 6, 2006, rights);
+    fileSystem.createEmpty("f.txt", 7, 7, 7, 7, 7, 2007, rights);
+    fileSystem.createEmpty("k.txt", 10, 10, 10, 10, 10, 2015, rights);
+    fileSystem.createEmpty("a.txt", 5, 5, 5, 5, 5, 2005, rights);
+    fileSystem.createEmpty("f.txt", 9, 9, 9, 9, 9, 2009, rights);
 
-    fileSystem.printFileInfo("test.txt", Group::author);
+    fileSystem.sortBy(SortBy::creationTime);
+    fileSystem.printAll();
+
+    fileSystem.sortBy(SortBy::name);
     fileSystem.printAll();
 
     int stor = 9;

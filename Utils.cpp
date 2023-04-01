@@ -46,7 +46,7 @@ void resize(char *&title, int titleCapacity)
     title = newTitle;
 }
 
-bool myStrCmp(const char *s1, const char *s2)
+int myStrCmp(const char *s1, const char *s2)
 {
     if (!s1 || !s2)
     {
@@ -57,7 +57,7 @@ bool myStrCmp(const char *s1, const char *s2)
         ++s1;
         ++s2;
     }
-    return *s1 - *s2 == 0;
+    return *(const unsigned char *)s1 - *(const unsigned char *)s2;
 }
 
 // only positive numbers!

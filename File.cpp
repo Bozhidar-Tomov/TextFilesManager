@@ -48,6 +48,16 @@ const char *File::getContent() const
     return this->content;
 }
 
+const DateTime &File::getLastModified() const
+{
+    return this->lastModified;
+}
+
+const DateTime &File::getCreationTime() const
+{
+    return this->creationTime;
+}
+
 void File::setContent(const char *newContent)
 {
 
